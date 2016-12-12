@@ -99,18 +99,18 @@ bank accounts:
                    :sue {:credits 3300 :debits 100}
                    :jane {:credits 2000 :debits 1000}})
                    
-    (into {}
-      (for-query
-        (o/and
-          (d/query data ?account :credits ?credits)
-          (d/query data ?account :debits ?debits)
-          (d/query data _ ?name ?account))
-        [?account (- ?credits ?debits)]))
+     (into {}
+       (o/for-query
+         (o/and
+           (d/query accounts ?account :credits ?credits)
+           (d/query accounts ?account :debits ?debits)
+           (d/query accounts _ ?name ?account))
+         [?name (- ?credits ?debits)]))
         
-    ;=> {:fred 500
-         :sam -80
-         :sue 3200
-         :jane 1000}
+     ;=> {:fred 500
+          :sam -80
+          :sue 3200
+          :jane 1000}
          
 ### Transforming data
 
